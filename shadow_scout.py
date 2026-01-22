@@ -21,8 +21,7 @@ GEMINI_API_KEY = st.sidebar.text_input("Gemini API Key", type="password")
 def google_search(query, api_key=None, cse_id=None, num_results=10):
     results = []
     
-    # --- DEMO SAFETY NET (Updated for Barton Hill) ---
-    # This runs if the query mentions "adith" (case insensitive)
+    # --- DEMO SAFETY 
     if "adith" in query.lower():
         return [
             {
