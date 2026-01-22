@@ -1,3 +1,4 @@
 streamlit
 google-generativeai
+duckduckgo-search
 google-api-python-client
