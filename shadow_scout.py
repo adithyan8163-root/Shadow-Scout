@@ -21,13 +21,28 @@ GEMINI_API_KEY = st.sidebar.text_input("Gemini API Key", type="password")
 def google_search(query, api_key=None, cse_id=None, num_results=10):
     results = []
     
-    if "Adith" in query or "adith" in query:
+    # --- DEMO SAFETY NET (Updated for Barton Hill) ---
+    # This runs if the query mentions "adith" (case insensitive)
+    if "adith" in query.lower():
         return [
-            {"title": "Adith S - Student Profile", "snippet": "Adith S is a B.Tech Computer Science student at Lourdes Matha College, Trivandrum.", "link": "https://linkedin.com/in/adith-s"},
-            {"title": "GitHub - Adith S", "snippet": "Python developer and cybersecurity enthusiast. Repositories include AI-tools and Shadow-Scout.", "link": "https://github.com/adiths"},
-            {"title": "Instagram: Adith_tvm", "snippet": "Photos from Trivandrum, Kerala. Bio: Tech | Cars | Code.", "link": "https://instagram.com/adith_tvm"}
+            {
+                "title": "Adith S - Student Profile | GEC Barton Hill", 
+                "snippet": "Adith S is a B.Tech Computer Science student at Government Engineering College, Barton Hill (GECBH), Trivandrum. Member of IEEE SB GECBH.", 
+                "link": "https://gecbh.ac.in/students/adith-s"
+            },
+            {
+                "title": "GitHub - Adith S (GECBH)", 
+                "snippet": "Python developer and Cybersecurity enthusiast from Trivandrum. Projects: Shadow-Scout, AI-Cyber-Defense. Organization: GEC Barton Hill.", 
+                "link": "https://github.com/adiths"
+            },
+            {
+                "title": "Adith S - Instagram", 
+                "snippet": "Adith_tvm | Barton Hill '26 | Tech & Cars. Photos from Trivandrum, Kerala.", 
+                "link": "https://instagram.com/adith_tvm"
+            }
         ]
-
+    
+    # ... rest of your DuckDuckGo or Google code ...
 # --- IMPORT AT THE TOP ---
 from duckduckgo_search import DDGS
 
