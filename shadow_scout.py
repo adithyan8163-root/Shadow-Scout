@@ -19,56 +19,60 @@ GEMINI_API_KEY = st.sidebar.text_input("Gemini API Key", type="password")
 
 # --- FUNCTIONS ---
 def google_search(query, api_key=None, cse_id=None, num_results=10):
+    """
+    Hybrid Search Function:
+    1. Checks for 'Demo' keywords first (Safety Net).
+    2. Tries DuckDuckGo if real search is needed.
+    """
     results = []
+    query_lower = query.lower()
     
-    # --- DEMO SAFETY 
-    if "adith" in query.lower():
+    # --- DEMO SAFETY NET (Guaranteed Results) ---
+    #Triggers if you type "adith" OR "cet" OR "demo"
+    if "adith" in query_lower or "cet" in query_lower or "demo" in query_lower:
+        print("DEBUG: Demo Mode Triggered!") 
         return [
             {
-                "title": "Adith S - Student Profile | GEC Barton Hill", 
-                "snippet": "Adith S is a B.Tech Computer Science student at Government Engineering College, Barton Hill (GECBH), Trivandrum. Member of IEEE SB GECBH.", 
-                "link": "https://gecbh.ac.in/students/adith-s"
+                "title": "Adith S - Student Profile | CET Trivandrum", 
+                "snippet": "Adith S is a B.Tech Computer Science student at College of Engineering Trivandrum (CET). Core Team member of CET CyberSec Club.", 
+                "link": "https://cet.ac.in/students/adith-s"
             },
             {
-                "title": "GitHub - Adith S (GECBH)", 
-                "snippet": "Python developer and Cybersecurity enthusiast from Trivandrum. Projects: Shadow-Scout, AI-Cyber-Defense. Organization: GEC Barton Hill.", 
-                "link": "https://github.com/adiths"
+                "title": "GitHub - Adith S (CET)", 
+                "snippet": "Security Researcher & Python Dev. Projects: Shadow-Scout, CET-Event-Bot. Located: Trivandrum, Kerala.", 
+                "link": "https://github.com/adiths-cet"
             },
             {
-                "title": "Adith S - Instagram", 
-                "snippet": "Adith_tvm | Barton Hill '26 | Tech & Cars. Photos from Trivandrum, Kerala.", 
-                "link": "https://instagram.com/adith_tvm"
+                "title": "Adith S - LinkedIn", 
+                "snippet": "Engineering Student at CET. Skills: Python, OSINT, Network Security. Volunteer at FOSS Cell CET.", 
+                "link": "https://linkedin.com/in/adith-s-cet"
+            },
+             {
+                "title": "Instagram: @adith_cet", 
+                "snippet": "Trivandrum | CETian | Tech & Travels. DM for Hackathon collabs.", 
+                "link": "https://instagram.com/adith_cet"
             }
         ]
     
-    # ... rest of your DuckDuckGo or Google code ...
-# --- IMPORT AT THE TOP ---
-from duckduckgo_search import DDGS
-
-# --- REPLACE THE SEARCH FUNCTION ---
-def google_search(query, api_key=None, cse_id=None, num_results=10):
-    """Searches DuckDuckGo (No API Key needed, bypasses Google blocks)"""
-    results = []
+    # --- REAL SEARCH (DuckDuckGo) ---
+    # Only runs if the demo keywords above are NOT found
     try:
-        # 1. Init DuckDuckGo
+        from duckduckgo_search import DDGS
         ddgs = DDGS()
-        
-        # 2. Run Search
         search_data = ddgs.text(query, max_results=num_results)
-        
-        # 3. Format results for your app
         if search_data:
             for item in search_data:
                 results.append({
                     'title': item.get('title', 'No Title'),
-                    'snippet': item.get('body', 'No Description'),
+                    'snippet': item.get('body', 'No Snippet'),
                     'link': item.get('href', '#')
                 })
-                
-        return results
     except Exception as e:
-        st.error(f"Search Error: {e}")
+        # If real search fails, return an empty list (or you could force demo results here too)
+        print(f"Search Error: {e}")
         return []
+
+    return results
         
 
 def analyze_risk(profile_data, gemini_key, target_name):
