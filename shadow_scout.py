@@ -27,7 +27,6 @@ def google_search(query, api_key=None, cse_id=None, num_results=10):
             {"title": "GitHub - Adith S", "snippet": "Python developer and cybersecurity enthusiast. Repositories include AI-tools and Shadow-Scout.", "link": "https://github.com/adiths"},
             {"title": "Instagram: Adith_tvm", "snippet": "Photos from Trivandrum, Kerala. Bio: Tech | Cars | Code.", "link": "https://instagram.com/adith_tvm"}
         ]
-    return results
 
 # --- IMPORT AT THE TOP ---
 from duckduckgo_search import DDGS
