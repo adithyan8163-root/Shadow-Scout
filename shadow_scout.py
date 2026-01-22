@@ -27,8 +27,7 @@ def google_search(query, api_key=None, cse_id=None, num_results=10):
     results = []
     query_lower = query.lower()
     
-    # --- DEMO SAFETY NET (Guaranteed Results) ---
-    #Triggers if you type "adith" OR "cet" OR "demo"
+    # - DEMO
     if "adith" in query_lower or "cet" in query_lower or "demo" in query_lower:
         print("DEBUG: Demo Mode Triggered!") 
         return [
